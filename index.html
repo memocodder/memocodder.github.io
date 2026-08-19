@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Владимир Андреянов — инженер полного цикла: ML-инфраструктура, GPU-парки, приложения, железо. Беру систему целиком и довожу до прода. Проект или 2–3 дня в неделю.">
+<title>Владимир Андреянов — инженер полного цикла</title>
+<style>
+  :root {
+    --bg: #0e1116;
+    --panel: #161b23;
+    --panel2: #1c232e;
+    --text: #dfe6ef;
+    --muted: #8b98a9;
+    --accent: #4cb3ff;
+    --line: #2a3442;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font: 16px/1.65 -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  }
+  .wrap { max-width: 980px; margin: 0 auto; padding: 0 24px; }
+  section { padding: 56px 0; border-top: 1px solid var(--line); }
+  h1 { font-size: 40px; line-height: 1.15; letter-spacing: -0.5px; }
+  h2 { font-size: 26px; margin-bottom: 8px; letter-spacing: -0.3px; }
+  h3 { font-size: 17px; margin-bottom: 6px; }
+  .kicker { color: var(--accent); font-size: 13px; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 14px; }
+  .sub { color: var(--muted); max-width: 640px; margin-top: 14px; font-size: 18px; }
+  .muted { color: var(--muted); }
+  .small { font-size: 13.5px; }
+
+  /* hero */
+  header.wrap { padding-top: 96px; padding-bottom: 72px; }
+  .hero-top { display: flex; align-items: center; gap: 20px; margin-bottom: 18px; }
+  .avatar { width: 92px; height: 92px; border-radius: 50%; object-fit: cover; border: 1px solid var(--line); }
+  .fmt { display: grid; gap: 8px; margin-top: 20px; font-size: 14.5px; color: var(--muted); }
+  .fmt b { color: var(--text); }
+  .cta {
+    display: inline-block; margin-top: 28px; padding: 13px 26px;
+    background: var(--accent); color: #06121d; font-weight: 650;
+    border-radius: 9px; text-decoration: none; font-size: 16.5px;
+  }
+  .cta:hover { filter: brightness(1.08); }
+  .contact-card {
+    position: relative; overflow: hidden;
+    background: var(--panel); border: 1px solid var(--line); border-radius: 14px;
+    padding: 36px 40px; margin-top: 8px;
+  }
+  .contact-card::before {
+    content: ""; position: absolute; inset: 0; pointer-events: none;
+    background: radial-gradient(600px 220px at 85% 0%, rgba(76,179,255,.09), transparent 70%);
+  }
+
+  /* facts row */
+  .facts { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 26px; }
+  .fact {
+    background: var(--panel); border: 1px solid var(--line); border-radius: 10px;
+    padding: 12px 18px; font-size: 14.5px;
+  }
+  .fact b { display: block; font-size: 19px; color: var(--accent); font-weight: 650; }
+
+  /* architecture diagram */
+  .arch { margin-top: 30px; display: grid; gap: 10px; }
+  .arch-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+  .node {
+    background: var(--panel2); border: 1px solid var(--line); border-radius: 10px;
+    padding: 14px 16px; text-align: center; font-size: 14.5px;
+  }
+  .node b { display: block; font-size: 15px; margin-bottom: 3px; }
+  .node .muted { font-size: 13px; }
+  .node.hub { border-color: var(--accent); background: #14202e; }
+  .arrow { text-align: center; color: var(--accent); font-size: 20px; line-height: 1; opacity: .75; }
+  .side-label { text-align: center; color: var(--muted); font-size: 12.5px; letter-spacing: 1.5px; text-transform: uppercase; margin-top: 4px; }
+  .side { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
+  .side .node { flex: 1; min-width: 140px; }
+
+  /* galleries */
+  .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 26px; }
+  .grid.two { grid-template-columns: 1fr 1fr; }
+  .grid figure {
+    background: var(--panel); border: 1px solid var(--line); border-radius: 10px;
+    overflow: hidden; display: flex; flex-direction: column;
+  }
+  .grid img, .grid video {
+    width: 100%; height: 240px; object-fit: cover; display: block;
+    background: #000; border-bottom: 1px solid var(--line);
+  }
+  .grid img.contain, .grid video.contain { object-fit: contain; background: #10161d; }
+  .grid figcaption { padding: 10px 12px; font-size: 13.5px; color: var(--muted); }
+  .caption-note { margin-top: 14px; font-size: 13.5px; color: var(--muted); font-style: italic; }
+
+  ul.plain { list-style: none; margin-top: 18px; display: grid; gap: 12px; }
+  ul.plain li { padding-left: 26px; position: relative; color: var(--text); }
+  ul.plain li::before { content: "—"; position: absolute; left: 0; color: var(--accent); }
+  ul.plain li .muted { display: block; font-size: 14px; }
+
+  footer { padding: 48px 0 80px; border-top: 1px solid var(--line); }
+
+  /* lightbox */
+  .grid figure { position: relative; }
+  .grid img { cursor: zoom-in; }
+  .expand-btn {
+    position: absolute; top: 10px; right: 10px; z-index: 2;
+    width: 36px; height: 36px; font-size: 18px; line-height: 1;
+    background: rgba(10,14,20,.7); color: #fff;
+    border: 1px solid rgba(255,255,255,.35); border-radius: 8px; cursor: pointer;
+  }
+  .expand-btn:hover { background: rgba(10,14,20,.95); }
+  .lightbox {
+    position: fixed; inset: 0; z-index: 50; display: none;
+    align-items: center; justify-content: center; padding: 28px;
+    background: rgba(4,7,11,.93);
+  }
+  .lightbox.open { display: flex; }
+  .lightbox img, .lightbox video {
+    max-width: 96vw; max-height: 92vh; width: auto; height: auto;
+    border-radius: 8px; box-shadow: 0 8px 40px rgba(0,0,0,.6);
+  }
+  .lightbox .close {
+    position: absolute; top: 10px; right: 18px; font-size: 38px;
+    background: none; border: none; color: #fff; cursor: pointer; line-height: 1;
+  }
+
+  @media (max-width: 760px) {
+    .grid, .arch-row { grid-template-columns: 1fr; }
+    h1 { font-size: 30px; }
+    .grid img, .grid video { height: auto; max-height: 420px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="wrap">
+  <div class="hero-top">
+    <img class="avatar" src="media/avatar.jpg" alt="Владимир Андреянов">
+    <div>
+      <div class="kicker" style="margin-bottom:6px">Инженер · системы · ML-инфраструктура</div>
+      <div class="small muted">Москва · работаю удалённо</div>
+    </div>
+  </div>
+  <h1>Владимир Андреянов.<br>Беру систему целиком — от&nbsp;железа до&nbsp;приложения — и&nbsp;довожу до&nbsp;прода.</h1>
+  <p class="sub">Один инженер вместо конвейера подрядчиков — быстрее и дешевле.
+  При этом код и документация устроены так, что проект в любой момент подхватят без меня.</p>
+  <p class="small" style="margin-top:22px">
+    <a href="https://t.me/vlamirand" style="color:var(--accent); text-decoration:none">Telegram: @vlamirand</a>
+    <span class="muted"> · </span>
+    <a href="mailto:vlamirand.g@gmail.com" style="color:var(--accent); text-decoration:none">vlamirand.g@gmail.com</a>
+  </p>
+</header>
+
+<section id="tt">
+  <div class="wrap">
+    <div class="kicker">Действующий продукт</div>
+    <h2>TranslateTube — AI-дубляж видео</h2>
+    <p class="sub">Сервис, который переводит и переозвучивает видео с сохранением характера голоса.
+    Построен одним инженером: продукт, инфраструктура, приложения, биллинг.
+    Сооснователь и техдиректор.</p>
+    <p class="small" style="margin-top:10px">
+      <a href="https://translatetube.io" target="_blank" style="color:var(--accent)">translatetube.io</a> ·
+      <a href="https://chromewebstore.google.com/detail/translatetube-youtube-vid/jlbhdllblndadgnmpmejihonkjgbdghn" target="_blank" style="color:var(--accent)">расширение в Chrome Web Store</a>
+      <span class="muted">— бейдж «Featured», 10 000+ установок</span>
+    </p>
+
+    <div class="facts">
+      <div class="fact"><b>5 мес</b>от идеи до прода</div>
+      <div class="fact"><b>1 инженер</b>вся разработка</div>
+      <div class="fact"><b>17 000</b>пользователей за 3 месяца среза — чистая органика, ноль рекламы</div>
+      <div class="fact"><b>40 000+</b>видео переведено за тот же срез</div>
+      <div class="fact"><b>7 000</b>активных пользователей в месяц</div>
+      <div class="fact"><b>70–200</b>видео в обработке одновременно — постоянный режим, перевод у каждого стартует мгновенно</div>
+      <div class="fact"><b>×10</b>запас на текущем парке — без добавления машин; дальше — автоскейлинг</div>
+    </div>
+    <p class="caption-note">Пользовательские цифры и графики — срез внутренней аналитики
+    за февраль–май 2026, не сегодняшние; загрузка «в моменте» — текущий рабочий режим.</p>
+
+    <div class="arch">
+      <div class="arch-row">
+        <div class="node"><b>Приложения iOS / Android</b><span class="muted">React Native</span></div>
+        <div class="node"><b>Браузерное расширение</b><span class="muted">перевод прямо на YouTube</span></div>
+        <div class="node"><b>Веб</b><span class="muted">кабинет и подписки</span></div>
+      </div>
+      <div class="arrow">↓</div>
+      <div class="node hub"><b>Оркестратор</b><span class="muted">планирование и приоритеты задач · отказоустойчивость · автоскейлинг парка · телеметрия</span></div>
+      <div class="arrow">↓</div>
+      <div class="node"><b>Распределённый GPU-парк</b><span class="muted">арендные спот-машины · многостадийная обработка медиа · автоматическое восстановление после сбоев</span></div>
+      <div class="side-label">служебные подсистемы</div>
+      <div class="side">
+        <div class="node small">Биллинг и подписки</div>
+        <div class="node small">Авторизация / IAM</div>
+        <div class="node small">Мониторинг и алерты</div>
+        <div class="node small">Свой Docker-реестр и CI</div>
+      </div>
+    </div>
+
+    <div class="grid" style="margin-top:26px">
+      <figure><img src="media/tt-growth.png" alt="Рост MAU до 7000" class="contain">
+        <figcaption>Рост базы в первые месяцы: до 7 000 активных в месяц — вся органика</figcaption></figure>
+      <figure><img src="media/tt-lang-pairs.png" alt="Топ языковых пар" class="contain">
+        <figcaption>Спрос по всему миру: топ языковых пар по пользователям и видео</figcaption></figure>
+      <figure><img src="media/tt-app-player.png" alt="Плеер приложения с живым переводом" class="contain">
+        <figcaption>Приложение: перевод и озвучка на лету, синхронные субтитры с оригиналом</figcaption></figure>
+      <figure><img src="media/tt-app-home.png" alt="Главный экран приложения" class="contain">
+        <figcaption>Приложение: главный экран</figcaption></figure>
+      <figure><img src="media/tt-extension.png" alt="Интерфейс расширения TranslateTube" class="contain">
+        <figcaption>Расширение: языковая пара, голос озвучки, субтитры — прямо на YouTube</figcaption></figure>
+      <figure><img src="media/tt-ext-live.png" alt="Виджет расширения в плеере YouTube" class="contain">
+        <figcaption>Расширение в работе: виджет перевода прямо в плеере YouTube</figcaption></figure>
+    </div>
+    <p class="caption-note">Схема — контур системы; устройство конвейера обработки подробно разбираю на созвоне.</p>
+  </div>
+</section>
+
+<section id="robot">
+  <div class="wrap">
+    <div class="kicker">Личный R&amp;D · железо + ML</div>
+    <h2>Робот-манипулятор с нуля</h2>
+    <p class="sub">Цель проекта — понять роботов изнутри, а не по статьям: собрал манипулятор
+    с нуля и прошёл руками весь стек. Волновые редукторы собственной конструкции (на практике
+    разобрался в основных схемах редукции, которые сейчас в ходу), тросовые приводы,
+    FOC-контроллеры на базе SimpleFOC, BLDC-моторы от дронов, стереозрение с картой глубины;
+    управление — дообучение VLA-модели на собственном форке LeRobot.</p>
+    <p class="sub">Итог серии экспериментов — осознанно простейшая архитектура: зубчатые шестерни,
+    максимум КПД и надёжности, точность — достаточная для ИИ-управления. Рабочий вывод:
+    роботу под обученной политикой важно выполнение задачи, а не изощрённая механика,
+    и при масштабировании дешевизна актуатора критична. Прототипы печатные — для скорости итераций.</p>
+
+    <div class="grid">
+      <figure><video src="media/robot-cubes.mp4" poster="media/poster-cubes.jpg" controls muted playsinline preload="none"></video>
+        <figcaption>Задача с кубиком: манипулятор перемещает объект по столу</figcaption></figure>
+      <figure><video src="media/robot-full.mp4" poster="media/poster-full.jpg" controls muted playsinline preload="none"></video>
+        <figcaption>Манипулятор в сборе, рабочие прогоны</figcaption></figure>
+      <figure><video src="media/depth-live.mp4" poster="media/poster-depth.jpg" controls muted playsinline preload="none"></video>
+        <figcaption>Стереозрение: карта глубины в реальном времени</figcaption></figure>
+      <figure><img src="media/reducer-open.jpg" alt="Волновой редуктор в разборе">
+        <figcaption>Волновой редуктор собственной конструкции — в разборе</figcaption></figure>
+      <figure><img src="media/reducer-parts.jpg" alt="Детали редуктора и бесколлекторный мотор">
+        <figcaption>Компоненты: генератор волны, сепаратор, бесколлекторный мотор от дрона</figcaption></figure>
+      <figure><img src="media/tendon-drive.jpg" alt="Тросовый привод крупным планом">
+        <figcaption>Тросовый привод — одна из исследованных схем передачи</figcaption></figure>
+      <figure><video src="media/actuator-spin.mp4" poster="media/poster-actuator.jpg" controls muted playsinline preload="none"></video>
+        <figcaption>Первый прототип двухступенчатого волнового актуатора (две ступени редукции внутри) — в сборе, прогон под питанием</figcaption></figure>
+      <figure><img src="media/stereo-depth.jpg" alt="Стереопара и карта глубины" class="contain">
+        <figcaption>Стереопара и восстановление глубины (свой CV-пайплайн)</figcaption></figure>
+      <figure><img src="media/parts-bag.jpg" alt="Пакет напечатанных деталей всех итераций">
+        <figcaption>Напечатанные детали всех итераций — объём экспериментов за время разработки</figcaption></figure>
+    </div>
+
+    <p class="caption-note">Кадры — из архива разработки.</p>
+  </div>
+</section>
+
+<section id="robochair">
+  <div class="wrap">
+    <div class="kicker">Личный R&amp;D · embodied AI</div>
+    <h2>RoboChair — RL-«второй пилот» для инвалидной коляски</h2>
+    <p class="sub">Система помощи управления: человек задаёт направление простой командой,
+    обученный агент берёт на себя остальное — объезд препятствий и выбор траектории.
+    Замысел — дать людям с нарушениями моторики (ДЦП, болезнь Паркинсона) больше самостоятельности.</p>
+    <p class="sub">Внутри: GPU-симуляция на JAX/Brax и Genesis — от тысяч до десятков тысяч
+    параллельных сред на обычном ноутбуке; собственная реализация PPO на JAX; поверх —
+    Diffusion Policy на собранных траекториях; восприятие — стереозрение, облако точек,
+    эффективная пространственная 3D-сетка.
+    <a href="https://github.com/memocodder/RoboChair" target="_blank" style="color:var(--accent)">Код открыт</a>.</p>
+    <div class="grid two">
+      <figure><img src="media/robochair-sim.png" alt="Агент в симуляции — навигация по коридору">
+        <figcaption>Агент в симуляции: навигация с объездом препятствий</figcaption></figure>
+      <figure><img src="media/robochair-swarm.png" alt="Параллельные среды при обучении PPO">
+        <figcaption>Параллельные среды при обучении PPO — масштабирование на GPU</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<section id="path">
+  <div class="wrap">
+    <div class="kicker">Путь</div>
+    <h2>До этого</h2>
+    <ul class="plain">
+      <li><b>До 2019 — собственное производство.</b><span class="muted">3D-печать и литьё пластиковых изделий: от моделирования до выпуска партий.</span></li>
+      <li><b>2021 — вход в ML через нейроинтерфейсы.</b><span class="muted">Эксперименты с ЭЭГ: обработка сигнала (FFT), первые модели на TensorFlow.</span></li>
+      <li><b>2022–2024 — фулстек-разработка на заказ.</b><span class="muted">Программные продукты под ключ; параллельно — углубление в ML.</span></li>
+      <li><b>2025 — embodied AI.</b><span class="muted">RoboChair, робот-манипулятор, собственный форк LeRobot.</span></li>
+      <li><b>С осени 2025 — TranslateTube.</b><span class="muted">Сооснователь и техдиректор.</span></li>
+    </ul>
+  </div>
+</section>
+
+<section id="how">
+  <div class="wrap">
+    <div class="kicker">Метод</div>
+    <h2>Как я работаю</h2>
+    <ul class="plain">
+      <li><b>Один — но передаваемо.</b><span class="muted">Маленькие самодокументированные модули, зафиксированные решения, код и документация в вашем репозитории с первого дня. Работу можно подхватить на любом этапе, не зная контекста, — новому инженеру, команде или ИИ-инструменту.</span></li>
+      <li><b>ML — на уровне внутренностей, не API.</b><span class="muted">Трансформеры и диффузионные модели — до устройства эталонных реализаций и их RL-форков; PPO и другие RL-алгоритмы — с практикой обучения политик в собственных проектах.</span></li>
+      <li><b>Весь стек в одних руках.</b><span class="muted">Инфраструктура, бэкенд, ML-интеграция, мобильные приложения, железо — без передачи задач между отделами.</span></li>
+      <li><b>Короткие итерации.</b><span class="muted">Прототип в первые недели → метрики → решение. Согласований на кварталы не бывает.</span></li>
+    </ul>
+  </div>
+</section>
+
+<section id="tasks">
+  <div class="wrap">
+    <div class="kicker">Типовые задачи</div>
+    <h2>С чем приходить</h2>
+    <ul class="plain">
+      <li><b>Удешевление ML-инференса — в разы.</b><span class="muted">Модели дёргаются по API или живут на дорогом облаке? Переношу на оркестрированный парк арендных спот-GPU: та же нагрузка, кратно ниже цена. Ровно так устроен TranslateTube.</span></li>
+      <li><b>Автоматизация операционки через ИИ.</b><span class="muted">Документы, поддержка, отчёты, рутинные решения — конвейеры на LLM, с контролем человека там, где нужна ответственность.</span></li>
+      <li><b>Компания с обратной связью.</b><span class="muted">Точки сбора сигналов от клиентов и процессов, аналитика поверх — и агент, который превращает сигналы в конкретные предложения изменений, вплоть до готового кода.</span></li>
+      <li><b>Система или MVP — до прода.</b><span class="muted">Новый сервис, ML-фича или застрявший проект: беру целиком и довожу до работающего состояния.</span></li>
+      <li><b>Модели под задачу.</b><span class="muted">Когда готовое не тянет — дообучение существующих моделей или архитектура под вашу задачу.</span></li>
+      <li><b>Железо и автоматизация — трезво.</b><span class="muted">Роботов могу — кейс выше. Но честная позиция: большая часть задач в железе решается классической автоматикой — дешевле и надёжнее, чем робот с ИИ. Сила ИИ сегодня в другом: зрение, документы, процессы, аналитика. Предлагаю то, что окупается, а не то, что модно.</span></li>
+    </ul>
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="wrap">
+    <div class="contact-card">
+      <div class="kicker">Условия и контакт</div>
+      <h2>Возьму проект или 2–3 полных дня в неделю</h2>
+      <p class="sub">Комфортный старт — пилот с фиксированными ценой, сроком и критериями приёмки:
+      небольшой бюджет, ясный результат.</p>
+      <p class="sub" style="margin-top:14px">Почему у меня есть эти дни: тяжёлая фаза исследований
+      и разработки в TranslateTube завершена — система работает сама (автоскейлинг, автовосстановление,
+      алерты), моя роль сейчас — поддержка и точечные доработки. Я так строю любую систему: чтобы после
+      запуска она не требовала героизма. С вашим проектом будет так же.</p>
+      <div class="fmt">
+        <div><b>Формат</b> — самозанятый (при длительном контракте — ИП), Москва (UTC+3), работаю удалённо; договор и NDA — по вашему шаблону, или предложу свой.</div>
+        <div><b>Доступность</b> — дни недели и время реакции фиксируются в договоре.</div>
+        <div><b>Передача</b> — код, документация и репозиторий ваши с первого дня; критерии приёмки фиксируем до старта.</div>
+        <div><b>Ориентир цены</b> — пилот от 300 тыс ₽ (фиксированные цена и срок, 2–6 недель); сопровождение — от 350 тыс ₽/мес за 2–3 полных дня в неделю.</div>
+      </div>
+      <a class="cta" href="https://t.me/vlamirand">Написать в Telegram — @vlamirand</a>
+      <p class="small muted" style="margin-top:16px">Или почтой:
+        <a href="mailto:vlamirand.g@gmail.com" style="color:var(--accent)">vlamirand.g@gmail.com</a>
+        — опишите задачу парой предложений, отвечу быстро.</p>
+    </div>
+  </div>
+</footer>
+
+<div class="lightbox" id="lightbox">
+  <button class="close" aria-label="Закрыть">×</button>
+  <div id="lb-content"></div>
+</div>
+
+<script>
+(function () {
+  var lb = document.getElementById('lightbox');
+  var box = document.getElementById('lb-content');
+
+  function open(node) {
+    box.innerHTML = '';
+    box.appendChild(node);
+    lb.classList.add('open');
+  }
+  function close() {
+    lb.classList.remove('open');
+    box.innerHTML = ''; // останавливает видео
+  }
+
+  document.querySelectorAll('.grid img').forEach(function (img) {
+    img.addEventListener('click', function () {
+      var big = document.createElement('img');
+      big.src = img.src;
+      big.alt = img.alt || '';
+      open(big);
+    });
+  });
+
+  document.querySelectorAll('.grid figure video').forEach(function (v) {
+    var btn = document.createElement('button');
+    btn.className = 'expand-btn';
+    btn.textContent = '⤢';
+    btn.title = 'Развернуть';
+    v.parentElement.appendChild(btn);
+    btn.addEventListener('click', function () {
+      v.pause();
+      var big = document.createElement('video');
+      big.src = v.getAttribute('src');
+      big.controls = true;
+      big.autoplay = true;
+      open(big);
+    });
+  });
+
+  lb.addEventListener('click', function (e) {
+    if (e.target === lb || e.target.classList.contains('close')) close();
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') close();
+  });
+})();
+</script>
+
+</body>
+</html>
